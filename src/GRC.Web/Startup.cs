@@ -1,9 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using GRC.Infrastructure;
+using MediatR;
+using Serilog;
+using GRC.Web.Logger;
 
 namespace GRC.Web
 {
@@ -19,9 +24,18 @@ namespace GRC.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // ----------------- Config SQL Server Options ------------------------------
+            services.AddDbContext<GRCContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-           services.AddControllersWithViews();
-           services.AddRazorPages();
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<GRCContext>();
+
+
+            //------------------ Manage Services ----------------------------------------
+            services.AddMediatR(typeof(Startup));
+            services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,10 +54,11 @@ namespace GRC.Web
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSerilogRequestLogging();
             app.UseRouting();
 
             app.UseAuthentication();
+            app.UseMiddleware<UserNameEnricher>();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
