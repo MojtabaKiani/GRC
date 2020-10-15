@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Home\Privacy.cshtml" />
+    <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_LoginPartial.cshtml" />
+    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="Views\_ViewImports.cshtml" />
+    <None Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
   </ItemGroup>
 
@@ -15,6 +26,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Serilog" Version="2.10.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />

@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using GRC.Infrastructure;
 using MediatR;
+using GRC.Core.Interfaces;
+using GRC.Infrastructure.Data;
 using Serilog;
 using GRC.Web.Logger;
 
@@ -30,6 +32,11 @@ namespace GRC.Web
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<GRCContext>();
+
+            //------------------ Add Dependency Inversion -------------------------------
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
+            services.AddScoped<IStandardInterface, StandardRepository>();
+            services.AddScoped<IDomainInterface, DomainRepository>();
 
 
             //------------------ Manage Services ----------------------------------------
