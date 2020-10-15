@@ -13,6 +13,7 @@ namespace GRC.Core.Entities
     {
         public Control()
         {
+            Questions = new List<Question>();
         }
 
         [Required]
@@ -34,6 +35,14 @@ namespace GRC.Core.Entities
         [DisplayName("Control Text")]
         [NotMapped]
         public string FullText => (Code == "") ? Text : $"{Code}) {Text}";
+
+        public List<Question> Questions { get; set; }
+
+        public void AddQuestion(Question question)
+        {
+            Guard.Against.Null<Question>(question, nameof(question));
+            Questions.Add(question);
+        }
 
     }
 }

@@ -14,6 +14,7 @@ namespace GRC.Core.Entities
         public Standard()
         {
             Domains = new List<Domain>();
+            Questionaries = new List<Questionary>();
         }
 
         [Required]
@@ -37,6 +38,8 @@ namespace GRC.Core.Entities
         public string Fullname => $"{Name} - {ReleaseYear}";
 
         public List<Domain> Domains { get; set; }
+
+        public List<Questionary> Questionaries { get; set; }
 
         public void AddDomains(Domain domain)
         {
