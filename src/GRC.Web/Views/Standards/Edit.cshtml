@@ -1,12 +1,12 @@
 ﻿@model StandardViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Standard";
 }
 
-<h1>Edit</h1>
+<h1>Edit Standard</h1>
 
-<h4>Standard</h4>
+<h4>@Model.Standard.FullName</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -41,7 +41,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="page-link">Back to List</a>
 </div>
 
 @section Scripts {

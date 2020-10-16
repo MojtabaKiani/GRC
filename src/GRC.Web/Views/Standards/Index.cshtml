@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<GRC.Core.Entities.Standard>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Standards List";
 }
 
-<h1>Index</h1>
+<h1>Standards List</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
+<p class="text-right">
+    <a asp-action="Create" class="btn btn-info">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -46,9 +46,10 @@
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                <a  asp-controller="domains" asp-action="Index"  asp-route-standardId="@item.Id">Domains</a>
+                <a  asp-controller="domains" asp-action="Index"  asp-route-standardId="@item.Id">Manage Domains</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+<hr />

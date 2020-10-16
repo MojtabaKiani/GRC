@@ -40,32 +40,6 @@ namespace GRC.Web.Controllers
         }
 
 
-        // GET: StandardCategories/Details/5
-        public async Task<ActionResult<StandardCategory>> Details(int? id)
-        {
-            if (id == null)
-                return BadRequest();
-
-            try
-            {
-                var standardCategory = await _mediator.Send(new GetByIDHandler.Request(id.Value));
-                if (standardCategory == null)
-                {
-                    _logger.LogWarning("Requested standard category {id} could not be found.", id);
-                    return NotFound();
-                }
-
-                return View(standardCategory);
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occured on Getting standard category {Id}", id.Value);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-        }
-
-
         // GET: StandardCategories/Create
         public IActionResult Create()
         {

@@ -30,7 +30,7 @@ namespace UniteTests.GRCCore.Entities
             Assert.Equal(_name, _sut.Name);
             Assert.Equal(_releaseYear, _sut.ReleaseYear);
             Assert.Equal(_description, _sut.Description);
-            Assert.Equal($"{_name} - {_releaseYear}", _sut.Fullname);
+            Assert.Equal($"{_name} - {_releaseYear}", _sut.FullName);
         }
 
 

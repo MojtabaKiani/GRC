@@ -4,9 +4,9 @@
     ViewData["Title"] = "Standard Categories";
 }
 
-<h1>Manage Standard Categories</h1>
+<h1>Standard Categories List</h1>
 
-<p>
+<p class="text-right">
     <a asp-action="Create" class="btn btn-info">Create New</a>
 </p>
 <table class="table">
@@ -26,9 +26,8 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-light">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-light">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-light">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }

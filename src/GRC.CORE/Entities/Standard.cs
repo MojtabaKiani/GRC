@@ -21,9 +21,11 @@ namespace GRC.Core.Entities
         [MaxLength(100)]
         public string Name { get; set; }
 
+        [DisplayName("Release Year")]
         [YearValidation]
         public int ReleaseYear { get; set; }
 
+        [DisplayName("Category")]
         [Required]
         public int StandardCategoryId { get; set; }
 
@@ -35,7 +37,7 @@ namespace GRC.Core.Entities
 
         [DisplayName("Standard Name")]
         [NotMapped]
-        public string Fullname => $"{Name} - {ReleaseYear}";
+        public string FullName => $"{Name} - {ReleaseYear}";
 
         public List<Domain> Domains { get; set; }
 

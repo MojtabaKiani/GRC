@@ -36,7 +36,7 @@ namespace GRC.Web.Controllers
                     _logger.LogWarning("Requested Standard {Id} could not be found.", standardId);
                     return NotFound();
                 }
-                ViewBag.StandardName = standard.Fullname;
+                ViewBag.StandardName = standard.FullName;
                 return View(await _mediator.Send(new GetAllHandler.Request(standardId)));
             }
             catch (Exception ex)
