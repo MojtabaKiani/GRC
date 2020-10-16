@@ -1,4 +1,4 @@
-﻿@model GRC.Core.Entities.Domain
+﻿@model Domain
 
 @{
     ViewData["Title"] = "Domain Details";
@@ -7,7 +7,10 @@
 
 <h1><a asp-controller="Standards" asp-action="Details" asp-route-id="@Model.StandardId" class="card-link">@Model.Standard.FullName</a></h1>
 <h4>Domain Details</h4>
-
+<div class="text-right">
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
 <div>
     <hr />
     <dl class="row">
@@ -38,7 +41,33 @@
     </dl>
     <hr />
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<h4>Controls List</h4>
+<p class="text-right">
+    <a asp-action="Index" asp-controller="Controls" asp-route-domainId="@Model.Id" class="btn btn-info">Manage Controls</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Controls.GetEnumerator().Current.FullText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Controls.GetEnumerator().Current.Level)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Controls)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Level)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

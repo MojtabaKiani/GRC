@@ -37,6 +37,7 @@ namespace GRC.Web
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IStandardInterface, StandardRepository>();
             services.AddScoped<IDomainInterface, DomainRepository>();
+            services.AddScoped<IControlInterface, ControlRepository>();
 
 
             //------------------ Manage Services ----------------------------------------

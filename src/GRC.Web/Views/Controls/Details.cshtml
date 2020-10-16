@@ -1,0 +1,44 @@
+﻿@model Control
+
+@{
+    ViewData["Title"] = "Control Details";
+}
+
+
+<h1><a asp-controller="Domains" asp-action="Details" asp-route-id="@Model.Domain.Id" asp-route-StandardId="@Model.Domain.StandardId" class="card-link">@Model.Domain.FullText</a></h1>
+<h4>Control Details</h4>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Code)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Code)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Text)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Level)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Level)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Domain)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Domain.FullText)
+        </dd>
+    </dl>
+    <hr />
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GRC.Infrastructure.Data
 {
-    public class DomainRepository : BaseRepository<Domain>,IDomainInterface
+    public class DomainRepository : BaseRepository<Domain>, IDomainInterface
     {
         private readonly GRCContext context;
 
@@ -20,10 +20,9 @@ namespace GRC.Infrastructure.Data
             return await _dbContext.Domains.Where(q => q.StandardId == StandardId).ToListAsync();
         }
 
-        public async override  Task<Domain> GetByIdAsync(int id)
+        public async override Task<Domain> GetByIdAsync(int id)
         {
-            return await _dbContext.Domains.Include(x => x.Standard).SingleAsync(q => q.Id == id);
+            return await _dbContext.Domains.Include(x => x.Standard).Include(x => x.Controls).SingleAsync(q => q.Id == id);
         }
-
     }
 }
