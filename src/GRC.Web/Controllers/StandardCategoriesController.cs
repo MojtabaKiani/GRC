@@ -75,7 +75,7 @@ namespace GRC.Web.Controllers
         // POST: StandardCategories/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult<StandardCategory>> Create([FromBody] StandardCategory standardCategory)
+        public async Task<ActionResult<StandardCategory>> Create([FromForm] StandardCategory standardCategory)
         {
             try
             {

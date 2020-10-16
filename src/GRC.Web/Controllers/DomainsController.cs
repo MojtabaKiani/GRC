@@ -30,6 +30,13 @@ namespace GRC.Web.Controllers
         {
             try
             {
+                var standard = await _mediator.Send(new GRC.Web.Features.StandardHandlers.GetByIDHandler.Request(standardId));
+                if (standard==null)
+                {
+                    _logger.LogWarning("Requested Standard {Id} could not be found.", standardId);
+                    return NotFound();
+                }
+                ViewBag.StandardName = standard.Fullname;
                 return View(await _mediator.Send(new GetAllHandler.Request(standardId)));
             }
             catch (Exception ex)

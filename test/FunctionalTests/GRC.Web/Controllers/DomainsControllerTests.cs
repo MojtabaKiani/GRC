@@ -37,6 +37,8 @@ namespace FunctionalTests.GRCWeb.Controllers
                  new Domain(){Id = 1, Code="1", StandardId=1,  Title = "Policies"},
                  new Domain(){Id = 1, Code="2", StandardId=1,  Title = "Policies2"},
             };
+            var standard = new Standard { Id = 1, Name = "ISMS" };
+            _mediator.Setup(x => x.Send(It.IsAny<GRC.Web.Features.StandardHandlers.GetByIDHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(standard);
             _mediator.Setup(x => x.Send(It.IsAny<GetAllHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(sut);
 
             //When
@@ -49,11 +51,29 @@ namespace FunctionalTests.GRCWeb.Controllers
 
         [Fact]
         [Trait("Action", "GetList")]
+        public async void GetAll_Shoud_Returns_Error_When_Standard_not_Exists()
+        {
+            //Given
+            _mediator.Setup(x => x.Send(It.IsAny<GRC.Web.Features.StandardHandlers.GetByIDHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync((Standard)null);
+
+            //When
+            var controller = new DomainsController(_mediator.Object, _logger.Object);
+
+            //Then
+            var result = await controller.Index(1);
+            Assert.IsType<NotFoundResult>(result.Result);
+        }
+
+        [Fact]
+        [Trait("Action", "GetList")]
         public async void GetAll_Shoud_Returns_InternalServerError_When_Rais_Error()
         {
+            //Given
+            var standard = new Standard { Id = 1, Name = "ISMS" };
+            _mediator.Setup(x => x.Send(It.IsAny<GRC.Web.Features.StandardHandlers.GetByIDHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(standard);
+            _mediator.Setup(x => x.Send(It.IsAny<GetAllHandler.Request>(), It.IsAny<CancellationToken>())).Throws(new System.Exception());
 
             //When  
-            _mediator.Setup(x => x.Send(It.IsAny<GetAllHandler.Request>(), It.IsAny<CancellationToken>())).Throws(new System.Exception());
             var controller = new DomainsController(_mediator.Object, _logger.Object);
 
             //Then
