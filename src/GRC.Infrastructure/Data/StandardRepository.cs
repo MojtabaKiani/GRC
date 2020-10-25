@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GRC.Infrastructure.Data
 {
-    public class StandardRepository : BaseRepository<Standard>,IStandardInterface
+    public class StandardRepository : BaseRepository<Standard>, IStandardInterface
     {
         private readonly GRCContext context;
 
@@ -17,12 +17,22 @@ namespace GRC.Infrastructure.Data
 
         public override async Task<List<Standard>> ListAllAsync()
         {
-            return await _dbContext.Standards.Include(x=> x.StandardCategory).ToListAsync();
+            return await _dbContext.Standards.Include(x => x.StandardCategory).ToListAsync();
         }
 
         public override async Task<Standard> GetByIdAsync(int Id)
         {
-            return await _dbContext.Standards.Include(x => x.StandardCategory).Include(x => x.Domains).SingleAsync(q => q.Id == Id);
+            return await _dbContext.Standards.Include(x => x.StandardCategory)
+                                             .Include(x => x.Domains)
+                                             .SingleAsync(q => q.Id == Id);
+        }
+
+        public async Task<Standard> GetByIdFullInclude(int Id)
+        {
+            return await _dbContext.Standards.Include(x => x.Domains)
+                                             .ThenInclude(x=> x.Controls)
+                                             .ThenInclude(x=> x.Questions)
+                                             .SingleAsync(q => q.Id == Id);
         }
     }
 }

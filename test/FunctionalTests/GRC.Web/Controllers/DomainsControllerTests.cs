@@ -89,7 +89,7 @@ namespace FunctionalTests.GRCWeb.Controllers
         {
             //Given
             var sut = new Domain() { Id = 1, Code = "1", StandardId = 1, Title = "Policies" };
-            _mediator.Setup(x => x.Send(It.IsAny<GetByIDHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(sut);
+            _mediator.Setup(x => x.Send(It.IsAny<GetByIdHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(sut);
 
             //When
             var controller = new DomainsController(_mediator.Object, _logger.Object);
@@ -105,7 +105,7 @@ namespace FunctionalTests.GRCWeb.Controllers
         {
             //Given
             var sut = new Domain() { Id = 1, Code = "1", StandardId = 1, Title = "Policies" };
-            _mediator.Setup(x => x.Send(It.IsAny<GetByIDHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(sut);
+            _mediator.Setup(x => x.Send(It.IsAny<GetByIdHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(sut);
 
             //When
             var controller = new DomainsController(_mediator.Object, _logger.Object);
@@ -121,7 +121,7 @@ namespace FunctionalTests.GRCWeb.Controllers
         public async void GetById_Should_Returns_NotFound_When_Id_Not_Exists()
         {
             //Given
-            _mediator.Setup(x => x.Send(It.IsAny<GetByIDHandler.Request>(), It.IsAny<CancellationToken>()))
+            _mediator.Setup(x => x.Send(It.IsAny<GetByIdHandler.Request>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((Domain)null);
 
             //When
@@ -137,7 +137,7 @@ namespace FunctionalTests.GRCWeb.Controllers
         public async void GetById_Should_Returns_BadRequest_When_Id_Is_Null()
         {
             //Given
-            _mediator.Setup(x => x.Send(It.IsAny<GetByIDHandler.Request>(), It.IsAny<CancellationToken>()))
+            _mediator.Setup(x => x.Send(It.IsAny<GetByIdHandler.Request>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((Domain)null);
 
             //When
@@ -153,7 +153,7 @@ namespace FunctionalTests.GRCWeb.Controllers
         public async void GetById_Shoud_Returns_InternalServerError_When_Rais_Error()
         {
             //Given
-            _mediator.Setup(x => x.Send(It.IsAny<GetByIDHandler.Request>(), It.IsAny<CancellationToken>())).Throws(new System.Exception());
+            _mediator.Setup(x => x.Send(It.IsAny<GetByIdHandler.Request>(), It.IsAny<CancellationToken>())).Throws(new System.Exception());
 
 
             //When  
@@ -324,7 +324,7 @@ namespace FunctionalTests.GRCWeb.Controllers
         {
             //Given
             var sut = new Domain() { Id = 1, Code = "1", StandardId = 1, Title = "Policies" };
-            _mediator.Setup(x => x.Send(It.IsAny<GetByIDHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(sut);
+            _mediator.Setup(x => x.Send(It.IsAny<GetByIdHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(sut);
 
 
             //when  
@@ -344,7 +344,7 @@ namespace FunctionalTests.GRCWeb.Controllers
         {
 
             //Given
-            _mediator.Setup(x => x.Send(It.IsAny<GetByIDHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync((Domain)null);
+            _mediator.Setup(x => x.Send(It.IsAny<GetByIdHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync((Domain)null);
 
             //When  
             var controller = new DomainsController(_mediator.Object, _logger.Object);
@@ -372,7 +372,7 @@ namespace FunctionalTests.GRCWeb.Controllers
         {
             //Given
             var sut = new Domain() { Id = 1, Code = "1", StandardId = 1, Title = "Policies" };
-            _mediator.Setup(x => x.Send(It.IsAny<GetByIDHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(sut);
+            _mediator.Setup(x => x.Send(It.IsAny<GetByIdHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(sut);
             _mediator.Setup(x => x.Send(It.IsAny<UpdateHandler.Request>(), It.IsAny<CancellationToken>())).Throws(new System.Exception());
 
 
@@ -389,7 +389,7 @@ namespace FunctionalTests.GRCWeb.Controllers
         public async void Update_Shoud_Returns_InternalServerError_When_Get_Update_Page_Rais_Error()
         {
             //When  
-            _mediator.Setup(x => x.Send(It.IsAny<GetByIDHandler.Request>(), It.IsAny<CancellationToken>())).Throws(new System.Exception());
+            _mediator.Setup(x => x.Send(It.IsAny<GetByIdHandler.Request>(), It.IsAny<CancellationToken>())).Throws(new System.Exception());
             var controller = new DomainsController(_mediator.Object, _logger.Object);
 
             //Then
@@ -405,7 +405,7 @@ namespace FunctionalTests.GRCWeb.Controllers
         {
             //Given
             var sut = new Domain() { Id = 1, Code = "1", StandardId = 1, Title = "Policies" };
-            _mediator.Setup(x => x.Send(It.IsAny<GetByIDHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(sut);
+            _mediator.Setup(x => x.Send(It.IsAny<GetByIdHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(sut);
             _mediator.Setup(x => x.Send(It.IsAny<DeleteHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
 
@@ -436,7 +436,7 @@ namespace FunctionalTests.GRCWeb.Controllers
         {
             //Given
             var sut = new Domain() { Id = 1, Code = "1", StandardId = 1, Title = "Policies" };
-            _mediator.Setup(x => x.Send(It.IsAny<GetByIDHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(sut);
+            _mediator.Setup(x => x.Send(It.IsAny<GetByIdHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(sut);
 
             //when  
             var controller = new DomainsController(_mediator.Object, _logger.Object);
@@ -476,7 +476,7 @@ namespace FunctionalTests.GRCWeb.Controllers
         {
             //Given
             var sut = new Domain() { Id = 1, Code = "1", StandardId = 1, Title = "Policies" };
-            _mediator.Setup(x => x.Send(It.IsAny<GetByIDHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(sut);
+            _mediator.Setup(x => x.Send(It.IsAny<GetByIdHandler.Request>(), It.IsAny<CancellationToken>())).ReturnsAsync(sut);
             _mediator.Setup(x => x.Send(It.IsAny<DeleteHandler.Request>(), It.IsAny<CancellationToken>())).Throws(new System.Exception());
 
 
@@ -494,7 +494,7 @@ namespace FunctionalTests.GRCWeb.Controllers
         {
 
             //When  
-            _mediator.Setup(x => x.Send(It.IsAny<GetByIDHandler.Request>(), It.IsAny<CancellationToken>())).Throws(new System.Exception());
+            _mediator.Setup(x => x.Send(It.IsAny<GetByIdHandler.Request>(), It.IsAny<CancellationToken>())).Throws(new System.Exception());
             var controller = new DomainsController(_mediator.Object, _logger.Object);
 
             //Then

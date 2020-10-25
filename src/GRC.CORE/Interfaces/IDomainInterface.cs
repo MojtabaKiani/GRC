@@ -1,4 +1,5 @@
 ﻿using GRC.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,5 +9,6 @@ namespace GRC.Core.Interfaces
     {
         Task<List<Domain>> ListAllAsync(int StandardId);
 
+        Task<List<Tuple<string, int>>> GetDomainWithQuestionCount(int standardId);
     }
 }

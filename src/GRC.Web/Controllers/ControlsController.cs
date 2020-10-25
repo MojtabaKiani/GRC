@@ -30,7 +30,7 @@ namespace GRC.Web.Controllers
         {
             try
             {
-                var domain = await _mediator.Send(new GRC.Web.Features.DomainHandlers.GetByIDHandler.Request(domainId));
+                var domain = await _mediator.Send(new GRC.Web.Features.DomainHandlers.GetByIdHandler.Request(domainId));
                 if (domain==null)
                 {
                     _logger.LogWarning("Requested Domain {Id} could not be found.", domainId);
@@ -94,7 +94,7 @@ namespace GRC.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var domain = await _mediator.Send(new GRC.Web.Features.DomainHandlers.GetByIDHandler.Request(domainId));
+                    var domain = await _mediator.Send(new GRC.Web.Features.DomainHandlers.GetByIdHandler.Request(domainId));
                     domain.AddControl(Control);
                     await _mediator.Send(new GRC.Web.Features.DomainHandlers.UpdateHandler.Request(domain));
                     return RedirectToAction(nameof(Index));

@@ -12,15 +12,14 @@ namespace UnitTests.GRCCore.Entities
 
         public QuestionaryTests()
         {
-            _sut = new Questionary
+            _sut = new Questionary("Moji")
             {
                 Id = 1,
                 StandardId = 2,
                 ComplianceLevel = 3,
                 CreateDate = _dt,
                 Description = "Description",
-                Name = "Name",
-                OwnerUid = "Uid"
+                Name = "Name"
             };
         }
 
@@ -34,7 +33,7 @@ namespace UnitTests.GRCCore.Entities
             Assert.Equal(_dt, _sut.CreateDate);
             Assert.Equal("Description", _sut.Description);
             Assert.Equal("Name", _sut.Name);
-            Assert.Equal("Uid", _sut.OwnerUid);
+            Assert.Equal("Moji", _sut.OwnerUid);
         }
 
         [Fact]

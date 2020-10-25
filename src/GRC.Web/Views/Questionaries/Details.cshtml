@@ -1,0 +1,79 @@
+﻿@model QuestionaryViewModel
+
+@{
+    ViewData["Title"] = "Questionary Details";
+}
+
+<h1>@Model.Name Details</h1>
+<div class="text-right">
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.QuestionaryStandardFullName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QuestionaryStandardFullName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComplianceLevel)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComplianceLevel)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Result)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Result)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+</div>
+<hr />
+<h3>Questionary Result</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DomainResults.GetEnumerator().Current.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DomainResults.GetEnumerator().Current.CompletePercenage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DomainResults.GetEnumerator().Current.Result)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.DomainResults)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompletePercenage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Result)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

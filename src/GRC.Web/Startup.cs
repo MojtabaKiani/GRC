@@ -11,6 +11,7 @@ using GRC.Core.Interfaces;
 using GRC.Infrastructure.Data;
 using Serilog;
 using GRC.Web.Logger;
+using AutoMapper;
 
 namespace GRC.Web
 {
@@ -42,6 +43,7 @@ namespace GRC.Web
 
             //------------------ Manage Services ----------------------------------------
             services.AddMediatR(typeof(Startup));
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

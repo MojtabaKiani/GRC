@@ -55,7 +55,7 @@ namespace GRC.Web.Controllers
 
             try
             {
-                var Domain = await _mediator.Send(new GetByIDHandler.Request(id.Value));
+                var Domain = await _mediator.Send(new GetByIdHandler.Request(id.Value));
                 if (Domain == null)
                 {
                     _logger.LogWarning("Requested Domain {id} could not be found.", id);
@@ -120,7 +120,7 @@ namespace GRC.Web.Controllers
                 if (id == null)
                     return BadRequest();
 
-                var Domain = await _mediator.Send(new GetByIDHandler.Request(id.Value));
+                var Domain = await _mediator.Send(new GetByIdHandler.Request(id.Value));
                 if (Domain == null)
                 {
                     _logger.LogWarning("Requested Domain {id} could not be found.", id);
@@ -173,7 +173,7 @@ namespace GRC.Web.Controllers
                 }
                 catch (Exception ex)
                 {
-                    var sc = await _mediator.Send(new GetByIDHandler.Request(id));
+                    var sc = await _mediator.Send(new GetByIdHandler.Request(id));
                     if (sc == null)
                     {
                         _logger.LogWarning("Requested Domain {id} could not be found.", id);
@@ -196,7 +196,7 @@ namespace GRC.Web.Controllers
                 return BadRequest();
             try
             {
-                var Domain = await _mediator.Send(new GetByIDHandler.Request(id.Value));
+                var Domain = await _mediator.Send(new GetByIdHandler.Request(id.Value));
                 if (Domain == null)
                 {
                     _logger.LogWarning("Requested Domain {id} could not be found.", id);
@@ -216,7 +216,7 @@ namespace GRC.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var Domain = await _mediator.Send(new GetByIDHandler.Request(id));
+            var Domain = await _mediator.Send(new GetByIdHandler.Request(id));
             if (Domain == null)
             {
                 _logger.LogWarning("Requested Domain {id} could not be found.", id);

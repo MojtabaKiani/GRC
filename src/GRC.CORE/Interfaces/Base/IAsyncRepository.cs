@@ -11,7 +11,7 @@ namespace GRC.Core.Interfaces
 
         Task<List<T>> ListAllAsync();
 
-        Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec);
+        Task<List<T>> ListAsync(ISpecification<T> spec);
 
         Task<T> AddAsync(T entity);
 

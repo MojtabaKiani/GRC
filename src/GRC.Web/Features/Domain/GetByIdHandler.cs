@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace GRC.Web.Features.DomainHandlers
 {
-    public class GetByIDHandler : IRequestHandler<GetByIDHandler.Request, Domain>
+    public class GetByIdHandler : IRequestHandler<GetByIdHandler.Request, Domain>
     {
         private readonly IDomainInterface repository;
 
-        public GetByIDHandler(IDomainInterface repository)
+        public GetByIdHandler(IDomainInterface repository)
         {
             this.repository = repository;
         }

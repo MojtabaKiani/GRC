@@ -33,7 +33,7 @@ namespace GRC.Infrastructure.Data
             return await _dbContext.Set<T>().ToListAsync();
         }
 
-        public async Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec)
+        public async Task<List<T>> ListAsync(ISpecification<T> spec)
         {
             var specificationResult = ApplySpecification(spec);
             return await specificationResult.ToListAsync();
