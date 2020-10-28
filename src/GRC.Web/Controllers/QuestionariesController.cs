@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GRC.Core.Entities;
+using GRC.Web.Extensions;
 using GRC.Web.Features.QuestionaryHandlers;
 using GRC.Web.Models;
 using MediatR;
@@ -34,7 +35,7 @@ namespace GRC.Web.Controllers
         {
             try
             {
-                return View(await _mediator.Send(new GetAllHandler.Request(User.Identity.Name, User.IsInRole("Administrator"))));
+                return View(await _mediator.Send(new GetAllHandler.Request(User.Identity.Name, User.IsAdministrator())));
             }
             catch (Exception ex)
             {
@@ -58,7 +59,9 @@ namespace GRC.Web.Controllers
                     _logger.LogWarning("Requested questionary {id} could not be found or isn't related to user {UserName}.", id, User.Identity.Name);
                     return NotFound();
                 }
-                 if ( (questionary.OwnerUid != User.Identity.Name && !User.IsInRole("Administrator")))
+
+                bool UserHasAccess = questionary.OwnerUid == User.Identity.Name && User.IsAdministrator();
+                if (!UserHasAccess)
                 {
                     _logger.LogWarning("Requested questioary {id} doesn't belong to user {UserName}.", id, User.Identity.Name);
                     return StatusCode(StatusCodes.Status401Unauthorized);

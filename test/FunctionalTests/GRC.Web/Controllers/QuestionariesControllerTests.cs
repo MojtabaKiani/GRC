@@ -15,6 +15,7 @@ using GRC.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using System.Security.Principal;
+using Microsoft.AspNetCore.Identity;
 
 namespace FunctionalTests.GRCWeb.Controllers
 {
@@ -32,7 +33,6 @@ namespace FunctionalTests.GRCWeb.Controllers
             _logger = new Mock<ILogger<Questionary>>();
             _mediator = new Mock<IMediator>();
             _mapper = new Mock<IMapper>();
-
             var identity = new GenericIdentity("Owner", "test");
             var contextUser = new ClaimsPrincipal(identity);
             var httpContext = new DefaultHttpContext() { User = contextUser };
