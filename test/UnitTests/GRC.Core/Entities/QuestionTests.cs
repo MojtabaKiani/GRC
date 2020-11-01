@@ -10,34 +10,29 @@ namespace UnitTests.GRCCore.Entities
 {
     public class QuestionTests
     {
-        private Question _sut;
-        private DateTime _dt = DateTime.Now;
-
-        public QuestionTests()
-        {
-            _sut = new Question
-            {
-                Id = 1,
-                AnswersList = "1,2,3,4",
-                ControlId = 3,
-                CorrectAnswerIndex = 4,
-                Description = "Description",
-                Text = "Text",
-                Weight = 8
-            };
-        }
-
         [Fact]
         public void Question_Should_Bind_Corrctly()
         {
 
-            Assert.Equal(1, _sut.Id);
-            Assert.Equal("1,2,3,4", _sut.AnswersList);
-            Assert.Equal(3, _sut.ControlId);
-            Assert.Equal(4, _sut.CorrectAnswerIndex);
-            Assert.Equal("Description", _sut.Description);
-            Assert.Equal("Text", _sut.Text);
-            Assert.Equal(8, _sut.Weight);
+            var sut = new Question
+            {
+                Id = 1,
+                ControlId = 3,
+                Description = "Description",
+                Text = "Text",
+                Weight = 8,
+                QuestionAnswers = new List<QuestionAnswer> { new QuestionAnswer(), new QuestionAnswer() },
+                Answers = new List<Answer> { new Answer() }
+
+            };
+
+            Assert.Equal(1, sut.Id);
+            Assert.Equal(3, sut.ControlId);
+            Assert.Equal("Description", sut.Description);
+            Assert.Equal("Text", sut.Text);
+            Assert.Equal(8, sut.Weight);
+            Assert.Equal(2, sut.QuestionAnswers.Count());
+            Assert.Single(sut.Answers);
         }
 
     }

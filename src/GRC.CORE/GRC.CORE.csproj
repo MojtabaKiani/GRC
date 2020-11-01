@@ -8,6 +8,7 @@
     <PackageReference Include="Ardalis.GuardClauses" Version="3.0.1" />
     <PackageReference Include="Ardalis.Specification" Version="4.1.0" />
     <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="4.1.0" />
+    <PackageReference Include="DevExpress.Xpo" Version="19.2.7" />
   </ItemGroup>
 
 </Project>

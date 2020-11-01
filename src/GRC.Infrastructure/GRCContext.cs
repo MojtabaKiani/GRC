@@ -30,6 +30,8 @@ namespace GRC.Infrastructure
 
         public DbSet<Answer> Answers { get; set; }
 
+        public DbSet<QuestionAnswer> QuestionAnswers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Answer>().HasOne(s => s.Question).WithMany(q => q.Answers).OnDelete(DeleteBehavior.NoAction);

@@ -19,7 +19,7 @@ namespace GRC.Core.Entities
             DomainResults = new List<DomainResult>();
         }
 
-        public Questionary(string uid):base()
+        public Questionary(string uid):this()
         {
             OwnerUid = uid;
             CreateDate = DateTime.Now;

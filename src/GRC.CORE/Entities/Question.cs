@@ -13,16 +13,12 @@ namespace GRC.Core.Entities
         public Question()
         {
             Answers = new List<Answer>();
+            QuestionAnswers = new List<QuestionAnswer>();
         }
 
         [Required]
         [MaxLength(1000)]
         public string Text { get; set; }
-
-        [MaxLength(2000)]
-        public string AnswersList { get; set; }
-
-        public int CorrectAnswerIndex { get; set; }
 
         [Required]
         [Range(1, 10, ErrorMessage = "Question weight must be between 1 and 10")]
@@ -40,6 +36,8 @@ namespace GRC.Core.Entities
         public Control Control { get; set; }
 
         public List<Answer> Answers { get; set; }
+
+        public List<QuestionAnswer> QuestionAnswers { get; set; }
 
     }
 }
