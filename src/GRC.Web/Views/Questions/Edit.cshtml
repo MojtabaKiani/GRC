@@ -1,0 +1,72 @@
+﻿@model Question
+
+@{
+    ViewData["Title"] = "Edit Question";
+}
+
+<h1>Edit Question</h1>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Text" class="control-label"></label>
+                <input asp-for="Text" class="form-control" />
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <div class="card bg-light mb-3">
+                <div class="card-header">Answers</div>
+                <div class="card-body">
+                    <h5 class="card-title">Please fill the answers below and select the correct answer</h5>
+                    @for (var i = 0; i < Model.QuestionAnswers.Count(); i++)
+                    {
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <input type="checkbox" onchange="$('input[type=checkbox]').not(this).prop('checked', false);" asp-for="QuestionAnswers[i].IsCorrectAnswer">
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" asp-for="QuestionAnswers[i].AnswerText">
+                    <label class="input-group-text" asp-for="QuestionAnswers[i].Value"></label>
+                    <input type="text" class="form-control" asp-for="QuestionAnswers[i].Value">
+                    <input type="hidden" asp-for="QuestionAnswers[i].Id" />
+                </div>
+                        <p>
+                            <span asp-validation-for="QuestionAnswers[i].AnswerText" class="text-danger"></span>
+                            <span asp-validation-for="QuestionAnswers[i].Value" class="text-danger"></span>
+                        </p>
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Weight" class="control-label"></label>
+                <input asp-for="Weight" class="form-control" />
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Group" class="control-label"></label>
+                <input asp-for="Group" class="form-control" />
+                <span asp-validation-for="Group" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ControlId" />
+            <div class="form-group">
+                <input type="submit" action="Edit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

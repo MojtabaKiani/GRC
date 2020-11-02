@@ -39,6 +39,7 @@ namespace GRC.Web
             services.AddScoped<IStandardInterface, StandardRepository>();
             services.AddScoped<IDomainInterface, DomainRepository>();
             services.AddScoped<IControlInterface, ControlRepository>();
+            services.AddScoped<IQuestionInterface, QuestionRepository>();
 
 
             //------------------ Manage Services ----------------------------------------
