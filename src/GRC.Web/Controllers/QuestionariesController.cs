@@ -60,7 +60,7 @@ namespace GRC.Web.Controllers
                     return NotFound();
                 }
 
-                bool UserHasAccess = questionary.OwnerUid == User.Identity.Name && User.IsAdministrator();
+                bool UserHasAccess = questionary.OwnerUid == User.Identity.Name || User.IsAdministrator();
                 if (!UserHasAccess)
                 {
                     _logger.LogWarning("Requested questioary {id} doesn't belong to user {UserName}.", id, User.Identity.Name);

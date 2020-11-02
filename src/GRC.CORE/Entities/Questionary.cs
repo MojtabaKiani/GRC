@@ -61,7 +61,7 @@ namespace GRC.Core.Entities
         public List<DomainResult> DomainResults { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:P0}")]
-        public double CompletePercentage => DomainResults.Average(q => q.CompletePercenage);
+        public double CompletePercentage => (double)DomainResults.Sum(q => q.AnswerCount)/ DomainResults.Sum(q => q.QuestionCount);
 
         public void AddAnswer(Answer answer)
         {
@@ -69,7 +69,7 @@ namespace GRC.Core.Entities
             Answers.Add(answer);
         }
 
-        public void AddDomainResultsWithAnswer(string DomainName, double AnswerPoint)
+        private void AddDomainResultsWithAnswer(string DomainName, double AnswerPoint)
         {
             Guard.Against.NullOrEmpty(DomainName, nameof(DomainName));
             var DomainResult = DomainResults.SingleOrDefault(q => q.FullName == DomainName);
@@ -77,7 +77,7 @@ namespace GRC.Core.Entities
             DomainResult.AnswerCount++;
         }
 
-        public void AddDomainResults(string DomainName, int QuestionCount)
+        private void AddDomainResults(string DomainName, int QuestionCount)
         {
             Guard.Against.NullOrEmpty(DomainName,nameof(DomainName));
             DomainResults.Add(new DomainResult(DomainName, QuestionCount));

@@ -1,5 +1,6 @@
 ﻿using GRC.Core.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -61,21 +62,23 @@ namespace UnitTests.GRCCore.Entities
         public void Percentage_Property_Should_Bind_Correctly()
         {
             var standard = new Standard { Id = 1 };
-            standard.AddDomains(new Domain { Id = 1, Code = "1" });
-            standard.AddDomains(new Domain { Id = 2, Code = "2" });
-            standard.Domains.Single(s => s.Id == 1).AddControl(new Control { Id = 1, Code = "10" });
-            standard.Domains.Single(s => s.Id == 2).AddControl(new Control { Id = 4, Code = "20" });
+            standard.AddDomains(new Domain { Id = 1, Code = "1", Title = "Domain1" });
+            standard.AddDomains(new Domain { Id = 2, Code = "2", Title = "Domain2" });
+            standard.Domains.Single(s => s.Id == 1).AddControl(new Control { Id = 1, Code = "10", Text = "Control1" });
+            standard.Domains.Single(s => s.Id == 2).AddControl(new Control { Id = 4, Code = "20", Text = "Control2" });
             standard.Domains.Single(s => s.Id == 1).Controls.First().AddQuestion(new Question { Id = 1 });
             standard.Domains.Single(s => s.Id == 1).Controls.First().AddQuestion(new Question { Id = 2 });
             standard.Domains.Single(s => s.Id == 1).Controls.First().AddQuestion(new Question { Id = 3 });
             standard.Domains.Single(s => s.Id == 2).Controls.First().AddQuestion(new Question { Id = 4 });
             standard.Domains.Single(s => s.Id == 2).Controls.First().AddQuestion(new Question { Id = 5 });
             _sut.Standard = standard;
-            _sut.AddAnswer(new Answer { Id = 1 });
 
-            Assert.Equal(1 / 5, _sut.CompletePercentage);
+            var question = new Question { Id = 10, Control = new Control { Id = 10, Domain = new Domain { Id = 1, Code = "1", Title = "Domain1" } } };
+            _sut.AddAnswer(new Answer { Id = 1, Question = question });
+
+            _sut.CalculateResult(new List<Tuple<string, int>> { Tuple.Create("1) Domain1", 3), Tuple.Create("2) Domain2", 2) });
+            Assert.Equal(0.20, _sut.CompletePercentage, 2);
 
         }
-
     }
 }
