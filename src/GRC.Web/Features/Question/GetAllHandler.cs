@@ -1,6 +1,6 @@
 ﻿using GRC.Core.Entities;
 using GRC.Core.Interfaces;
-using GRC.CORE.Specifications;
+using GRC.Core.Specifications;
 using GRC.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

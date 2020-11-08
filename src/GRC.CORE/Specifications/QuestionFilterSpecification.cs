@@ -3,7 +3,7 @@ using GRC.Core.Entities;
 using System;
 
 
-namespace GRC.CORE.Specifications
+namespace GRC.Core.Specifications
 {
 
     public class QuestionFilterSpecification : Specification<Question>
