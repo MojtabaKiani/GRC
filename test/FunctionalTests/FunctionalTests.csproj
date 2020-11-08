@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\GRC.CORE\GRC.CORE.csproj" />
+    <ProjectReference Include="..\..\src\GRC.CORE\GRC.Core.csproj" />
     <ProjectReference Include="..\..\src\GRC.Web\GRC.Web.csproj" />
   </ItemGroup>
 

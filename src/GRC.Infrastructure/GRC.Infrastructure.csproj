@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GRC.CORE\GRC.CORE.csproj" />
+    <ProjectReference Include="..\GRC.CORE\GRC.Core.csproj" />
   </ItemGroup>
 
 </Project>
