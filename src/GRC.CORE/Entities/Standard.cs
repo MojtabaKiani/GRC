@@ -11,9 +11,13 @@ namespace GRC.Core.Entities
 {
     public class Standard : BaseEntity
     {
+
+
+        private readonly List<Domain> _domains;
+
         public Standard()
         {
-            Domains = new List<Domain>();
+            _domains = new List<Domain>();
             Questionaries = new List<Questionary>();
         }
 
@@ -39,7 +43,8 @@ namespace GRC.Core.Entities
         [NotMapped]
         public string FullName => $"{Name} - {ReleaseYear}";
 
-        public List<Domain> Domains { get; set; }
+        public IReadOnlyCollection<Domain> Domains => _domains.AsReadOnly();
+
 
         public List<Questionary> Questionaries { get; set; }
 
@@ -48,7 +53,7 @@ namespace GRC.Core.Entities
             Guard.Against.Null<Domain>(domain,nameof(domain));
             if (Domains.Any(c => c.Code == domain.Code))
                 throw (new ArgumentException("Doamin with specified code, already exists.",nameof(domain.Code)));
-            Domains.Add(domain);
+            _domains.Add(domain);
         }
     }
 }
