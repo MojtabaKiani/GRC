@@ -16,6 +16,12 @@ namespace GRC.Core.Entities
             QuestionAnswers = new List<QuestionAnswer>();
         }
 
+        public Question(int answerCount):this()
+        {
+            for (var i = 0; i < answerCount; i++)
+                QuestionAnswers.Add(new QuestionAnswer());
+        }
+
         [Required]
         [MaxLength(1000)]
         public string Text { get; set; }

@@ -83,9 +83,7 @@ namespace GRC.Web.Controllers
         // GET: Controls/1/Questions/Create
         public ActionResult<Question> Create()
         {
-            var question = new Question();
-            for (var counter = 0; counter < 4; counter++)
-                question.QuestionAnswers.Add(new QuestionAnswer());
+            var question = new Question(answerCount: 4);
             return View(question);
         }
 
