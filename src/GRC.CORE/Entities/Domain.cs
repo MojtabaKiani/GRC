@@ -10,10 +10,11 @@ namespace GRC.Core.Entities
 {
     public class Domain : BaseEntity
     {
+        private readonly List<Control> _controls;
+
         public Domain()
         {
-            Domains = new List<Domain>();
-            Controls = new List<Control>();
+            _controls = new List<Control>();
         }
         [Required]
         [MaxLength(10 , ErrorMessage = "Code length must be less than 10")]
@@ -31,10 +32,7 @@ namespace GRC.Core.Entities
 
         public Standard Standard { get; set; }
 
-        [NotMapped]
-        public List<Domain> Domains { get; set; }
-
-        public List<Control> Controls { get; set; }
+        public IReadOnlyCollection<Control> Controls => _controls.AsReadOnly();
 
         [DisplayName("Domain Title")]
         [NotMapped]
@@ -48,7 +46,7 @@ namespace GRC.Core.Entities
                 throw (new ArgumentException("Control with specified code, already exists.", nameof(control.Code)));
 
             control.DomainId = Id;
-            Controls.Add(control);
+            _controls.Add(control);
         }
     }
 }
