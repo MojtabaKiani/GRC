@@ -1,12 +1,7 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GRC.Web.Extensions
+namespace Microsoft.AspNetCore.Mvc
 {
     public static class UserManagementHelper
     {

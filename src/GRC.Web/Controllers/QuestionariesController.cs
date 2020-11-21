@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using GRC.Core.Entities;
-using GRC.Web.Extensions;
 using GRC.Web.Features.QuestionaryHandlers;
 using GRC.Web.Models;
 using MediatR;
