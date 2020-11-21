@@ -25,17 +25,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown">Management</a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="StandardCategories" asp-action="Index">Standard Category</a>
-                                </li>
-                                <li>
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Standards" asp-action="Index">Standards</a>
-                                </li>
-                            </ul>
-                        </li>
+                        <partial name="_AdminMenuPartial" />
                     </ul>
                 </div>
             </div>

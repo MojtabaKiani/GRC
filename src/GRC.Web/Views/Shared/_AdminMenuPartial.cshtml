@@ -1,0 +1,10 @@
+﻿@if (User.IsAdministrator())
+{
+    <li>
+        <a class="nav-link text-dark" asp-area="" asp-controller="StandardCategories" asp-action="Index">Standard Category</a>
+    </li>
+    <li>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Standards" asp-action="Index">Standards</a>
+    </li>
+}
+
