@@ -76,6 +76,11 @@ namespace GRC.Web
                     
                 });
 
+            //------------------ Manage Authorization ----------------------------------
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", p => p.RequireRole("Administrator"));
+            });
 
         }
 

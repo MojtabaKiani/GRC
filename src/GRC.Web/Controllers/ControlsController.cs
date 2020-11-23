@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace GRC.Web.Controllers
 {
     [Route("Domains/{domainId:int}/Controls/{action=Index}/{id:int?}")]
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class ControlsController : Controller
     {
         private readonly IMediator _mediator;

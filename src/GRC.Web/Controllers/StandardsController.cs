@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace GRC.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class StandardsController : Controller
     {
         private readonly IMediator _mediator;

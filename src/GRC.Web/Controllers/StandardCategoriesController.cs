@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace GRC.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class StandardCategoriesController : Controller
     {
         private readonly IMediator _mediator;
