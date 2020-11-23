@@ -21,13 +21,22 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">@name <b class="caret"></b></a>
-                    
                     <div class="dropdown-menu">
+                        <a class="dropdown-item" href="~/diagnostics">Your claims</a>
+                        <a class="dropdown-item" href="~/grants">Manage your grants</a>
                         <a class="dropdown-item" asp-action="Logout" asp-controller="Account">Logout</a>
                     </div>
-              </li>
+                </li>
             </ul>
         }
-    
+        else
+        {
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a asp-action="Login" asp-controller="Account" class="nav-link">Login<b class="caret"></b></a>
+            </li>
+        </ul>
+        }
+
     </nav>
 </div>
