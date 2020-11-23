@@ -1,4 +1,5 @@
 using GRC.Core.Identity;
+using GRC.IdentityProvider.Areas.Identity;
 using GRC.IdentityProvider.Infrastructure;
 using GRC.IdentityProvider.Services;
 using IdentityServer4;
@@ -30,17 +31,20 @@ namespace GRC.IdentityProvider
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddRazorPages();
 
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddDbContext<GRCIdentityProviderContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-
-            services.AddDbContext<GRCIdentityProviderContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddIdentity<GRCUser, IdentityRole>()
+            services.AddIdentity<GRCUser, IdentityRole>(options => 
+                {
+                    options.User.RequireUniqueEmail = true;
+                    options.SignIn.RequireConfirmedEmail = false;
+                })
                 .AddEntityFrameworkStores<GRCIdentityProviderContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IUserClaimsPrincipalFactory<GRCUser>, GRCUserClaimsPrincipalFactory>();
+
 
             var builder = services.AddIdentityServer(options =>
             {
@@ -51,19 +55,11 @@ namespace GRC.IdentityProvider
 
                 options.EmitStaticAudienceClaim = true;
             })
-                .AddInMemoryIdentityResources(Configuration.GetSection("IdentityServer:IdentityResources"))
-                .AddInMemoryApiResources(Configuration.GetSection("IdentityServer:ApiResources"))
-                .AddInMemoryClients(Configuration.GetSection("IdentityServer:Clients"))
-                .AddDeveloperSigningCredential()
-                .AddAspNetIdentity<GRCUser>();
-
-            services.AddAuthentication()
-                .AddGoogle(options =>
-                {
-                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                    options.ClientId = Configuration["Google:ClienrId"];
-                    options.ClientSecret = Configuration["Google:ClientSecret"];
-                });
+                 .AddInMemoryIdentityResources(Configuration.GetSection("IdentityServer:IdentityResources"))
+                 .AddInMemoryApiResources(Configuration.GetSection("IdentityServer:ApiResources"))
+                 .AddInMemoryClients(Configuration.GetSection("IdentityServer:Clients"))
+                 .AddDeveloperSigningCredential()
+                 .AddAspNetIdentity<GRCUser>();
 
             services.AddFluentEmail(Configuration["Mail:From"], "GRC")
                         .AddSmtpSender(new SmtpClient
@@ -75,6 +71,14 @@ namespace GRC.IdentityProvider
                             DeliveryMethod = SmtpDeliveryMethod.Network,
                             Credentials = new System.Net.NetworkCredential(Configuration["Mail:From"],Configuration["Mail:Password"])
                         });
+
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                    options.ClientId = Configuration["Google:ClientId"];
+                    options.ClientSecret = Configuration["Google:ClientSecret"];
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -101,8 +105,6 @@ namespace GRC.IdentityProvider
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
-                endpoints.MapRazorPages();
-
             });
         }
     }

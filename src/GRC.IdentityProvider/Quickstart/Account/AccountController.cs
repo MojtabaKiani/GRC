@@ -3,6 +3,7 @@
 
 
 using GRC.Core.Identity;
+using GRC.IdentityProvider.Models;
 using IdentityModel;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
@@ -15,8 +16,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace GRC.IdentityProvider.Quickstart.UI
@@ -210,6 +214,61 @@ namespace GRC.IdentityProvider.Quickstart.UI
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Register(string returnUrl)
+        {
+            var vm = new RegisterModel { ReturnUrl = returnUrl };
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterModel Input, string returnUrl)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
+            if (ModelState.IsValid)
+            {
+                var user = new GRCUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    Organization = Input.Organization,
+                    Name = Input.Name,
+                    LastName = Input.LastName
+                };
+
+                var result = await _userManager.CreateAsync(user, Input.Password);
+                if (result.Succeeded)
+                {
+                    await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("birthdate", Input.BirthDate.ToShortDateString()));
+
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    var callbackUrl = Url.Page("/Account/ConfirmEmail", pageHandler: null, values: new { area = "Identity", userId = user.Id, code = code }, protocol: Request.Scheme);
+
+                    await _email.SendEmailAsync(Input.Email, "Confirm your email",
+                        $"Please confirm your account by click on the below link : <br/><br/> <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>click me</a>.");
+
+                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    {
+                        return RedirectToAction("RegisterConfirmation", new { email = Input.Email });
+                    }
+                    else
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect(returnUrl);
+                    }
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(Input);
         }
 
         /*****************************************/
