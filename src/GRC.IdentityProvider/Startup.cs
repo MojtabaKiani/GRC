@@ -1,14 +1,17 @@
 using GRC.Core.Identity;
 using GRC.IdentityProvider.Infrastructure;
+using GRC.IdentityProvider.Services;
 using IdentityServer4;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using System.Net.Mail;
 
 namespace GRC.IdentityProvider
 {
@@ -27,6 +30,9 @@ namespace GRC.IdentityProvider
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages();
+
+            services.AddTransient<IEmailSender, EmailSender>();
 
 
             services.AddDbContext<GRCIdentityProviderContext>(options =>
@@ -58,6 +64,17 @@ namespace GRC.IdentityProvider
                     options.ClientId = Configuration["Google:ClienrId"];
                     options.ClientSecret = Configuration["Google:ClientSecret"];
                 });
+
+            services.AddFluentEmail(Configuration["Mail:From"], "GRC")
+                        .AddSmtpSender(new SmtpClient
+                        {
+                            Host = Configuration["Mail:SMTPServer"],
+                            EnableSsl = true,
+                            Port = 587,
+                            UseDefaultCredentials = false,
+                            DeliveryMethod = SmtpDeliveryMethod.Network,
+                            Credentials = new System.Net.NetworkCredential(Configuration["Mail:From"],Configuration["Mail:Password"])
+                        });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,9 +100,9 @@ namespace GRC.IdentityProvider
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapDefaultControllerRoute();
+                endpoints.MapRazorPages();
+
             });
         }
     }
