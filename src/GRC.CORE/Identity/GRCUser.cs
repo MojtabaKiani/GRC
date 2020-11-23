@@ -17,7 +17,7 @@ namespace GRC.Core.Identity
 
         [Display(Name = "Full Name")]
         [NotMapped]
-        public string FullName => $"{Name} {LastName} - {Email}";
+        public string FullName => $"{Name} {LastName} ({Email})";
 
     }
 }

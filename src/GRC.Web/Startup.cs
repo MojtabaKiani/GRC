@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +11,10 @@ using GRC.Infrastructure.Data;
 using Serilog;
 using GRC.Web.Logger;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace GRC.Web
 {
@@ -31,9 +34,6 @@ namespace GRC.Web
             services.AddDbContext<GRCContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<GRCContext>();
-
             //------------------ Add Dependency Inversion -------------------------------
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IStandardInterface, StandardRepository>();
@@ -45,8 +45,38 @@ namespace GRC.Web
             //------------------ Manage Services ----------------------------------------
             services.AddMediatR(typeof(Startup));
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddControllersWithViews(options => options.Filters.Add(new AuthorizeFilter()));
+
+            //------------------ Manage Authentication ----------------------------------
+            services.AddAuthentication(o =>
+            {
+                o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                o.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+                .AddCookie()
+                .AddOpenIdConnect(options =>
+                {
+                    options.Authority = Configuration["OpenId:Server"];
+
+                    options.ClientId = Configuration["OpenId:ClientId"];
+                    options.ClientSecret = Configuration["OpenId:ClientSecret"];
+                    options.CallbackPath = "/signin-oidc";
+
+                    options.Scope.Add("grc");
+                    options.SaveTokens = true;
+                    options.GetClaimsFromUserInfoEndpoint = true;
+                    options.ClaimActions.MapAll();
+                    options.ResponseType = "code";
+                    options.ResponseMode = "form_post";
+
+                    options.UsePkce = true;
+
+                    options.TokenValidationParameters.RoleClaimType = "Role";
+                    options.TokenValidationParameters.NameClaimType = "FullName";
+                    
+                });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,12 +85,10 @@ namespace GRC.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -77,7 +105,6 @@ namespace GRC.Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
             });
         }
     }
