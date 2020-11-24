@@ -11,5 +11,7 @@ namespace GRC.Web.Controllers
 
         public IActionResult Login() => Challenge(new AuthenticationProperties { RedirectUri = "/" });
 
+        public IActionResult AccessDenied() => View();
+
     }
 }
