@@ -1,17 +1,10 @@
 ﻿using GRC.Core.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GRC.Infrastructure
 {
-    public class GRCContext : IdentityDbContext
+    public class GRCContext : DbContext
     {
         public GRCContext(DbContextOptions<GRCContext> option) : base(option)
         {
