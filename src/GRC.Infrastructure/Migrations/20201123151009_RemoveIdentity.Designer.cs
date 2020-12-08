@@ -4,14 +4,16 @@ using GRC.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GRC.Infrastructure.Migrations
 {
     [DbContext(typeof(GRCContext))]
-    partial class GRCContextModelSnapshot : ModelSnapshot
+    [Migration("20201123151009_RemoveIdentity")]
+    partial class RemoveIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
